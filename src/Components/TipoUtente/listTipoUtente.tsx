@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from 'react';
 import styles from './listTipoUtente.module.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { TipoUtenteData } from '../../Models/tipoutentedata';
-import { Padding } from '@mui/icons-material';
+import { LockOutlined, Padding } from '@mui/icons-material';
+import { Avatar, Box, Container, CssBaseline, Typography } from '@mui/material';
 
 interface ListTipoUtenteProps {}
 
@@ -77,37 +78,54 @@ const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
 
     return (
         <>
-        {hasTipoUtente && (            
-            <div>
-                <table className={styles.table}>
-                    <thead>
-                        <tr>
-                            <th>TipoUtente Id</th>
-                            <th>Tipologia</th>
-                            <th>Descrizione</th>
-                            <th>#</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {listTipoUtente.map((item, index) => (
-                        <tr key={index}>
-                            <td>{item.id}</td>
-                            <td>{item.tipo}</td>
-                            <td>{item.descrizione}</td>
-                            <td>
-                                <input type="submit" onClick={() => gotoEdit(item.id)} value='Edit'></input>
-                                <input type="submit" onClick={() => gotoView(item.id)} value='View'></input>
-                                <input type="submit" onClick={() => gotoDelete(item.id)} value='Delete'></input>
-                            </td>
-                        </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        )}
+        <Container maxWidth="lg">
+            <CssBaseline />
+            <Box
+                sx={{
+                mt: 20,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                }}
+            >
+                <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
+                <LockOutlined />
+                </Avatar>
+                <Typography variant="h6">List of TipoUtente</Typography>
+                {hasTipoUtente && (       
+                    <div>
+                        <Link to="/Components/TipoUtente/AddTipoUtente">Add a new TipoUtente</Link>
+                        <table className={styles.table}>
+                            <thead>
+                                <tr>
+                                    <th>TipoUtente Id</th>
+                                    <th>Tipologia</th>
+                                    <th>Descrizione</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {listTipoUtente.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{item.id}</td>
+                                    <td>{item.tipo}</td>
+                                    <td>{item.descrizione}</td>
+                                    <td>
+                                        <input type="submit" onClick={() => gotoEdit(item.id)} value='Edit'></input>
+                                        <input type="submit" onClick={() => gotoView(item.id)} value='View'></input>
+                                        <input type="submit" onClick={() => gotoDelete(item.id)} value='Delete'></input>
+                                    </td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                )}
 
-        <input type="submit"  className={styles.MarginLeftAuto} onClick={gotoHome} value='goto Home'></input>
-
+                <input type="submit"  className={styles.MarginLeftAuto} onClick={gotoHome} value='goto Home'></input>
+            </Box>
+            </Container>
         </>
     )
 }

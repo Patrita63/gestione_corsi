@@ -7,6 +7,7 @@ import ListTipoUtente from './Components/TipoUtente/listTipoUtente';
 import EditTipoUtente from './Components/TipoUtente/editTipoUtente';
 import ViewTipoUtente from './Components/TipoUtente/viewTipoUtente';
 import DelTipoUtente from './Components/TipoUtente/delTipoutente';
+import AddTipoUtente from './Components/TipoUtente/addTipoUtente';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/Components/TipoUtente/EditTipoUtente" element={<EditTipoUtente /> } />
         <Route path="/Components/TipoUtente/ViewTipoUtente" element={<ViewTipoUtente /> } />
         <Route path="/Components/TipoUtente/DeleteTipoUtente" element={<DelTipoUtente /> } />
+        <Route path="/Components/TipoUtente/AddTipoUtente" element={<AddTipoUtente /> } />
         {/* <Route path="/Login" element={<Login /> } />
         <Route path="/Logout" element={<Logout /> } />
         <Route path="/Register" element={<Register /> } />
