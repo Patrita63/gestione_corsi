@@ -99,8 +99,8 @@ const DelTipoUtente: FC<DelTipoUtenteProps> = () => {
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                     <TextField
+                        disabled
                         name="name"
-                        required
                         fullWidth
                         id="name"
                         label="Tipologia"
@@ -112,7 +112,7 @@ const DelTipoUtente: FC<DelTipoUtenteProps> = () => {
 
                     <Grid item xs={12}>
                     <TextField
-                        required
+                        disabled
                         fullWidth
                         id="descrizione"
                         label="Descrizione"

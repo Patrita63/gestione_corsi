@@ -3,6 +3,7 @@ import styles from './listTipoUtente.module.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { TipoUtenteData } from '../../Models/tipoutentedata';
+import { Padding } from '@mui/icons-material';
 
 interface ListTipoUtenteProps {}
 
@@ -78,7 +79,7 @@ const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
         <>
         {hasTipoUtente && (            
             <div>
-                <table>
+                <table className={styles.table}>
                     <thead>
                         <tr>
                             <th>TipoUtente Id</th>
@@ -94,9 +95,9 @@ const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
                             <td>{item.tipo}</td>
                             <td>{item.descrizione}</td>
                             <td>
-                                <input type="submit"  onClick={() => gotoEdit(item.id)} value='Edit'></input> |
-                                <input type="submit"  onClick={() => gotoView(item.id)} value='View'></input> |
-                                <input type="submit"  onClick={() => gotoDelete(item.id)} value='Delete'></input>
+                                <input type="submit" onClick={() => gotoEdit(item.id)} value='Edit'></input>
+                                <input type="submit" onClick={() => gotoView(item.id)} value='View'></input>
+                                <input type="submit" onClick={() => gotoDelete(item.id)} value='Delete'></input>
                             </td>
                         </tr>
                         ))}

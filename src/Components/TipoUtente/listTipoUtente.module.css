@@ -1,4 +1,6 @@
 table {
+    margin-top: 10px;
+    margin-left: 10px;
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
@@ -8,7 +10,6 @@ table {
     border: 1px solid #312f2f;
     text-align: left;
     padding: 8px;
-    
   }
 
   th {
@@ -17,4 +18,9 @@ table {
 
   tr:nth-child(even) {
     background-color: #dddddd;
+  }
+
+  input {
+    margin-top: 10px;
+    margin-left: 10px;
   }
