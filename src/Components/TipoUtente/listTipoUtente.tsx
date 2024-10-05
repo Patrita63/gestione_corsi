@@ -1,27 +1,43 @@
 import { FC, useEffect, useState } from 'react';
-import styles from './Home.module.css';
+import styles from './listTipoUtente.module.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { TipoUtenteData } from '../../Models/tipoutentedata';
 
-interface HomeProps {}
+interface ListTipoUtenteProps {}
 
-const Home: FC<HomeProps> = () => {
+const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
 
     const [listTipoUtente, setListTipoUtente] = useState<any[]>([]);
     const [hasTipoUtente, setHasTipoUtente] = useState(false);
     // To navigate to another component
     const navigate = useNavigate();
 
-    const gotoListTipoUtente = () => {
+    const gotoHome = () => {
         // To navigate to another component
-       navigate("/Components/TipoUtente/ListTipoUtente");
-   }
+        navigate("/");
+    }
 
-    // useEffect(() => {
+    const gotoEdit = (id: number) => {
+        localStorage.setItem("tipoutenteid", String(id));
+        navigate("/Components/TipoUtente/EditTipoUtente");
+    }
+
+    const gotoView = (id: number) => {
+        localStorage.setItem("tipoutenteid", String(id));
+        navigate("/Components/TipoUtente/ViewTipoUtente");
+    }
+
+    const gotoDelete = (id: number) => {
+        localStorage.setItem("tipoutenteid", String(id));
+        navigate("/Components/TipoUtente/DeleteTipoUtente");
+    }
+
+    useEffect(() => {
         // call api or anything
-        // console.log("loaded");
-        // callGetTipiUtenteAsync();
-     // },[]);
+        console.log("loaded");
+        callGetTipiUtenteAsync();
+     },[]);
 
     const callGetTipiUtenteAsync = async () => {
         // https://localhost:7182/api/TipoUtenteAsync
@@ -45,6 +61,9 @@ const Home: FC<HomeProps> = () => {
                 // console.log('Descrizione: ' + response.data[0].descrizione);
                 setListTipoUtente(response.data);
                 setHasTipoUtente(true);
+
+                // N.B. Nello localStorage salvo la stringa
+                localStorage.setItem("datitipoutentejson", JSON.stringify(response.data));
             }
         })
         .catch((error) => {
@@ -65,6 +84,7 @@ const Home: FC<HomeProps> = () => {
                             <th>TipoUtente Id</th>
                             <th>Tipologia</th>
                             <th>Descrizione</th>
+                            <th>#</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,6 +93,11 @@ const Home: FC<HomeProps> = () => {
                             <td>{item.id}</td>
                             <td>{item.tipo}</td>
                             <td>{item.descrizione}</td>
+                            <td>
+                                <input type="submit"  onClick={() => gotoEdit(item.id)} value='Edit'></input> |
+                                <input type="submit"  onClick={() => gotoView(item.id)} value='View'></input> |
+                                <input type="submit"  onClick={() => gotoDelete(item.id)} value='Delete'></input>
+                            </td>
                         </tr>
                         ))}
                     </tbody>
@@ -80,10 +105,10 @@ const Home: FC<HomeProps> = () => {
             </div>
         )}
 
-        <input type="submit"  className={styles.MarginLeftAuto} onClick={gotoListTipoUtente} value='goto ListTipoUtente'></input>
+        <input type="submit"  className={styles.MarginLeftAuto} onClick={gotoHome} value='goto Home'></input>
 
         </>
     )
 }
 
-export default Home;
+export default ListTipoUtente;
