@@ -78,7 +78,7 @@ const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
                 // N.B. Nello localStorage salvo la stringa
                 localStorage.setItem("datitipoutentejson", JSON.stringify(response.data));
 
-                const rows: GridRowsProp = listTipoUtente;
+                const rows: GridRowsProp = response.data;
                 /* [
                     { id: 1, col1: "Hello", col2: "World" },
                     { id: 2, col1: "MUI X", col2: "is awesome" },
