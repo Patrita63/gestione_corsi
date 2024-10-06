@@ -272,7 +272,12 @@ const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
                         <Link to="/Components/TipoUtente/AddTipoUtente">Add a new TipoUtente</Link>
 
                         <div style={{ height: '100%', width: '100%' }}>
-                            <DataGrid rows={rowsListTipoUtente} columns={columnsListTipoUtente} />
+                            <DataGrid 
+                                // pagination
+                                // pageSizeOptions={[5, 10, 25]}
+                                rows={rowsListTipoUtente} 
+                                columns={columnsListTipoUtente} 
+                            />
                         </div>
                     </div>
                     
