@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { TipoUtenteData } from '../../Models/tipoutentedata';
 import { LockOutlined, Padding } from '@mui/icons-material';
-import { Avatar, Box, Container, CssBaseline, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, CssBaseline, Typography } from '@mui/material';
 
 interface ListTipoUtenteProps {}
 
@@ -123,9 +123,19 @@ const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
                     
                 )}
 
-                <input type="submit"  className={styles.MarginLeftAuto} onClick={gotoHome} value='goto Home'></input>
+                {/* <input type="submit"  className={styles.MarginLeftAuto} onClick={gotoHome} value='goto Home'></input> */}
+
+                <Button
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={gotoHome}
+                    >
+
+                    goto Home
+                </Button>
             </Box>
-            </Container>
+        </Container>
         </>
     )
 }

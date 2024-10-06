@@ -2,6 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import styles from './Home.module.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Avatar, Box, Button, Container, CssBaseline, Typography } from '@mui/material';
+import { LockOutlined } from '@mui/icons-material';
 
 interface HomeProps {}
 
@@ -57,31 +59,59 @@ const Home: FC<HomeProps> = () => {
 
     return (
         <>
-        {hasTipoUtente && (            
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>TipoUtente Id</th>
-                            <th>Tipologia</th>
-                            <th>Descrizione</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {listTipoUtente.map((item, index) => (
-                        <tr key={index}>
-                            <td>{item.id}</td>
-                            <td>{item.tipo}</td>
-                            <td>{item.descrizione}</td>
-                        </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        )}
+    {/* <Patrizio>
+    marginTop: "50px"
+    </Patrizio> */}
+        <Container maxWidth="lg">
+            <CssBaseline />
+            <Box
+                sx={{
+                mt: 20,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: "50px"
+                }}
+            >
+                <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
+                <LockOutlined />
+                </Avatar>
+                <Typography variant="h6">Welcome in Home page!</Typography>
 
-        <input type="submit"  className={styles.MarginLeftAuto} onClick={gotoListTipoUtente} value='goto ListTipoUtente'></input>
+                {hasTipoUtente && (            
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>TipoUtente Id</th>
+                                    <th>Tipologia</th>
+                                    <th>Descrizione</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {listTipoUtente.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{item.id}</td>
+                                    <td>{item.tipo}</td>
+                                    <td>{item.descrizione}</td>
+                                </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
 
+                <Button
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={gotoListTipoUtente}
+                    >
+
+                    goto List TipoUtente
+                </Button>
+            </Box>
+        </Container>
         </>
     )
 }
