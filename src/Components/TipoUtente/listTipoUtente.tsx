@@ -271,7 +271,7 @@ const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
                     <div>
                         <Link to="/Components/TipoUtente/AddTipoUtente">Add a new TipoUtente</Link>
 
-                        <div style={{ height: 300, width: '100%' }}>
+                        <div style={{ height: '100%', width: '100%' }}>
                             <DataGrid rows={rowsListTipoUtente} columns={columnsListTipoUtente} />
                         </div>
                     </div>
