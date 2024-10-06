@@ -61,8 +61,9 @@ const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
             { id: 4, col1: "MUI", col2: "" },
             { id: 5, col1: "Joy UI", col2: "is awesome" },
             { id: 6, col1: "MUI Base", col2: "is amazing" }
-          ];
-          setListRowsTipoUtente(rows);
+        ];
+
+        setListRowsTipoUtente(rows);
 
           const columns: GridColDef[] = [
             { field: "id", headerName: 'Id', width: 60, hideable: true },
