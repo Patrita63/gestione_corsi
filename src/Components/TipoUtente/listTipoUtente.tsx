@@ -260,6 +260,7 @@ const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                marginTop: "50px"
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
