@@ -3,15 +3,22 @@ import styles from './listTipoUtente.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { TipoUtenteData } from '../../Models/tipoutentedata';
-import { LockOutlined, Padding } from '@mui/icons-material';
+import { LockOutlined } from '@mui/icons-material';
 import { Avatar, Box, Button, Container, CssBaseline, Typography } from '@mui/material';
+// https://mui.com/x/react-data-grid/getting-started/#installation
+import { DataGrid, GridApi, GridColDef, GridRowsProp, GridActionsCellItemProps } from '@mui/x-data-grid';
 
+  
 interface ListTipoUtenteProps {}
 
 const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
 
     const [listTipoUtente, setListTipoUtente] = useState<any[]>([]);
     const [hasTipoUtente, setHasTipoUtente] = useState(false);
+
+    const [rowsListTipoUtente, setListRowsTipoUtente] = useState<GridRowsProp>();
+    const [columnsListTipoUtente, setListColumnsTipoUtente] = useState<GridColDef[]>([]);
+
     // To navigate to another component
     const navigate = useNavigate();
 
@@ -35,10 +42,110 @@ const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
         navigate("/Components/TipoUtente/DeleteTipoUtente");
     }
 
+    /* 
+    N.B. GridCellValue ==> GridActionsCellItemProps
+    Vedere anche 
+    (c) => (thisRow[c.field] = params.row)
+    https://codesandbox.io/p/sandbox/64331095-cant-add-a-button-to-every-row-in-material-ui-table-forked-hwighx?file=%2Fdemo.tsx%3A27%2C6
+    https://mui.com/x/react-data-grid/server-side-data/ 
+    */
     useEffect(() => {
         // call api or anything
         console.log("loaded");
         callGetTipiUtenteAsync();
+
+        const rows: GridRowsProp = [
+            { id: 1, col1: "Hello", col2: "World" },
+            { id: 2, col1: "MUI X", col2: "is awesome" },
+            { id: 3, col1: "Material UI", col2: "is amazing" },
+            { id: 4, col1: "MUI", col2: "" },
+            { id: 5, col1: "Joy UI", col2: "is awesome" },
+            { id: 6, col1: "MUI Base", col2: "is amazing" }
+          ];
+          setListRowsTipoUtente(rows);
+
+          const columns: GridColDef[] = [
+            { field: "id", headerName: 'Id', width: 60, hideable: true },
+            { field: 'col1', headerName: 'Tipo', width: 150 },
+            { field: 'col2', headerName: 'Descrizione', width: 250 },
+            {
+                field: "actionEdit",
+                headerName: "Edit",
+                sortable: false,
+                renderCell: (params) => {
+                  const onClick = (e: { stopPropagation: () => void; }) => {
+                    e.stopPropagation(); // don't select this row after clicking
+            
+                    const api: GridApi = params.api;
+                    // const thisRow: Record<string, GridActionsCellItemProps> = {};
+                    let thisRow: Record<string, GridActionsCellItemProps> = {};
+                    api
+                      .getAllColumns()
+                      .filter((c) => c.field !== "__check__" && !!c)
+                      thisRow["actionEdit"] = params.row
+                      /* .forEach(
+                        (c) => (thisRow[c.field] = params.row)
+                      ); */
+            
+                    return gotoEdit(params.row.id); // alert(JSON.stringify(thisRow, null, 4));
+                  };
+            
+                  return <Button onClick={onClick}>Edit</Button>;
+                }
+              },
+              {
+                field: "actionView",
+                headerName: "View",
+                sortable: false,
+                renderCell: (params) => {
+                  const onClick = (e: { stopPropagation: () => void; }) => {
+                    e.stopPropagation(); // don't select this row after clicking
+            
+                    const api: GridApi = params.api;
+                    // const thisRow: Record<string, GridActionsCellItemProps> = {};
+                    let thisRow: Record<string, GridActionsCellItemProps> = {};
+                    api
+                      .getAllColumns()
+                      .filter((c) => c.field !== "__check__" && !!c)
+                      thisRow["actionView"] = params.row
+                      /* .forEach(
+                        (c) => (thisRow[c.field] = params.row)
+                      ); */
+            
+                    return gotoView(params.row.id); // alert(JSON.stringify(thisRow, null, 4));
+                  };
+            
+                  return <Button onClick={onClick}>View</Button>;
+                }
+              },
+              {
+                field: "actionDelete",
+                headerName: "Delete",
+                sortable: false,
+                renderCell: (params) => {
+                  const onClick = (e: { stopPropagation: () => void; }) => {
+                    e.stopPropagation(); // don't select this row after clicking
+            
+                    const api: GridApi = params.api;
+                    // const thisRow: Record<string, GridActionsCellItemProps> = {};
+                    let thisRow: Record<string, GridActionsCellItemProps> = {};
+                    api
+                      .getAllColumns()
+                      .filter((c) => c.field !== "__check__" && !!c)
+                      thisRow["actionDelete"] = params.row
+                      /* .forEach(
+                        (c) => (thisRow[c.field] = params.row)
+                      ); */
+            
+                      return gotoDelete(params.row.id); // alert(JSON.stringify(thisRow, null, 4));
+                  };
+            
+                  return <Button onClick={onClick}>Delete</Button>;
+                }
+              }
+          ];
+          setListColumnsTipoUtente(columns);
+
      },[]);
 
     const callGetTipiUtenteAsync = async () => {
@@ -95,30 +202,10 @@ const ListTipoUtente: FC<ListTipoUtenteProps> = () => {
                 {hasTipoUtente && (       
                     <div>
                         <Link to="/Components/TipoUtente/AddTipoUtente">Add a new TipoUtente</Link>
-                        <table className={styles.table}>
-                            <thead>
-                                <tr>
-                                    <th>TipoUtente Id</th>
-                                    <th>Tipologia</th>
-                                    <th>Descrizione</th>
-                                    <th>#</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {listTipoUtente.map((item, index) => (
-                                <tr key={index}>
-                                    <td>{item.id}</td>
-                                    <td>{item.tipo}</td>
-                                    <td>{item.descrizione}</td>
-                                    <td>
-                                        <input type="submit" onClick={() => gotoEdit(item.id)} value='Edit'></input>
-                                        <input type="submit" onClick={() => gotoView(item.id)} value='View'></input>
-                                        <input type="submit" onClick={() => gotoDelete(item.id)} value='Delete'></input>
-                                    </td>
-                                </tr>
-                                ))}
-                            </tbody>
-                        </table>
+
+                        <div style={{ height: 300, width: '100%' }}>
+                            <DataGrid rows={rowsListTipoUtente} columns={columnsListTipoUtente} />
+                        </div>
                     </div>
                     
                 )}
